@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* 1. Full Page Setup - Poori screen blue cover karega */
+    body, html {
+        height: 100%;
+        margin: 0;
+        overflow-x: hidden;
+        background-color: #0046ad; /* Fallback color */
+    }
+
+    .hero-container {
+        background-color: #0046ad; /* Internshala Blue */
+        min-height: 100vh; 
+        width: 100%;
+        display: flex;
+        align-items: center;
+        color: white;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    /* 2. Text Styling */
+    .hero-title {
+        font-size: 3.8rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+        line-height: 1.1;
+    }
+
+    .hero-title span {
+        color: #f1c40f; /* Yellow Highlight like Internshala */
+    }
+
+    .hero-subtitle {
+        font-size: 1.5rem;
+        margin-bottom: 40px;
+        opacity: 0.9;
+        font-weight: 300;
+    }
+
+    /* 3. Action Box (Login/Register Card) */
+    .action-box {
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 35px;
+        max-width: 440px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    }
+
+    /* 4. Vertical Buttons Style */
+    .btn-intern {
+        width: 100%; 
+        padding: 14px;
+        font-weight: 700;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        margin-bottom: 15px; 
+        font-size: 1.1rem;
+        border: none;
+    }
+
+    .btn-white { background: #ffffff; color: #0046ad; }
+    .btn-student { background: #2ecc71; color: white; }
+    .btn-company { background: #f1c40f; color: #333; }
+
+    .btn-intern:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        opacity: 0.9;
+    }
+
+    /* 5. IMAGE SECTION - LARGE & GLOWING */
+    .hero-right-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-right: 20px;
+    }
+
+    .hero-image {
+        /* Size control: 75% height is perfect */
+        max-height: 75vh; 
+        width: auto;
+        max-width: 100%;
+        border-radius: 20px;
+        
+        /* GLOW EFFECT: Black shadow for depth + Blue neon for glow */
+        filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.5)) 
+                drop-shadow(0px 0px 25px rgba(0, 123, 255, 0.7));
+        
+        /* Halka sa "breathing" animation glow ke liye */
+        animation: pulseGlow 3s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+        from { filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.4)) drop-shadow(0px 0px 20px rgba(0, 123, 255, 0.5)); }
+        to { filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.6)) drop-shadow(0px 0px 45px rgba(0, 123, 255, 0.9)); }
+    }
+
+    /* 6. Transparent Navbar adjustment */
+    .navbar {
+        z-index: 1000;
+        background: transparent !important;
+        position: absolute;
+        width: 100%;
+        border: none;
+    }
+
+    /* Responsive: Mobile pe image hide ho jayegi */
+    @media (max-width: 991px) {
+        .hero-title { font-size: 2.8rem; text-align: center; }
+        .hero-subtitle { text-align: center; }
+        .action-box { margin: 0 auto; }
+        .hero-right-section { display: none; }
+    }
+</style>
+
+<div class="hero-container">
+    <div class="container">
+        <div class="row align-items-center">
+            
+            <div class="col-lg-6 py-5">
+                <h1 class="hero-title">India's <span>#1 portal</span></h1>
+                <p class="hero-subtitle">For fresher jobs, internships and courses.</p>
+                
+                <div class="action-box">
+                    <h4 class="mb-4 fw-bold text-center">Candidate Sign up / Login</h4>
+                    
+                    <a href="{{ url_for('login') }}" class="btn-intern btn-white">Login Account</a>
+                    <a href="{{ url_for('register_student') }}" class="btn-intern btn-student">Student Register</a>
+                    <a href="{{ url_for('register_company') }}" class="btn-intern btn-company">Company Register</a>
+                    
+                    <div class="mt-3 text-center">
+                        <small style="opacity: 0.8;">By continuing, you agree to our <u>T&C</u>.</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 hero-right-section">
+                <img src="{{ url_for('static', filename='images/home_hero.png') }}" 
+                     alt="Recruitment" class="hero-image">
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

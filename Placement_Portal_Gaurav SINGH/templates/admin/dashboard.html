@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">🛡️ Admin Dashboard</h2>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white shadow mb-4">
+                <div class="card-body">
+                    <h6>Total Students</h6>
+                    <h2>{{ s_count }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white shadow mb-4">
+                <div class="card-body">
+                    <h6>Total Companies</h6>
+                    <h2>{{ c_count }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white shadow mb-4">
+                <div class="card-body">
+                    <h6>Active Drives</h6>
+                    <h2>{{ d_count }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-dark shadow mb-4">
+                <div class="card-body">
+                    <h6>Pending Approvals</h6>
+                    <h2>{{ p_count }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <h4>Quick Actions</h4>
+        <a href="{{ url_for('show_students') }}" class="btn btn-outline-primary m-1">Manage Students</a>
+        <a href="{{ url_for('show_companies') }}" class="btn btn-outline-success m-1">Manage Companies</a>
+        <a href="{{ url_for('show_drives') }}" class="btn btn-outline-info m-1">View Drives</a>
+    </div>
+</div>
+{% endblock %}

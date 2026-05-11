@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Company Registration</h2>
+<form method="POST">
+    <input type="text" name="company_name" class="form-control mb-2" placeholder="Company Name" required>
+    <input type="email" name="email" class="form-control mb-2" placeholder="Login Email" required>
+    <input type="password" name="password" class="form-control mb-2" placeholder="Password" required>
+    <input type="text" name="hr_name" class="form-control mb-2" placeholder="HR Name" required>
+    <input type="email" name="hr_email" class="form-control mb-2" placeholder="HR Email" required>
+    <input type="text" name="hr_contact" class="form-control mb-2" placeholder="HR Contact" required>
+    <input type="url" name="website" class="form-control mb-2" placeholder="Website">
+    <textarea name="description" class="form-control mb-2" placeholder="Company Description"></textarea>
+    <button type="submit" class="btn btn-warning">Register</button>
+</form>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %} {% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>🎓 Manage Students</h2>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <form method="GET" action="{{ url_for('show_students') }}" class="mb-4 d-flex">
+                <input type="text" name="search" class="form-control me-2" placeholder="Search by student name...">
+                <button type="submit" class="btn btn-primary px-4">Search</button>
+                <a href="{{ url_for('show_students') }}" class="btn btn-secondary ms-2">Clear</a>
+            </form>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>Roll No</th>
+                            <th>Course & Branch</th>
+                            <th>CGPA</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in students %}
+                        <tr>
+                            <td>{{ s.id }}</td>
+                            <td class="fw-bold">{{ s.full_name }}</td>
+                            <td>{{ s.roll_no }}</td>
+                            <td>{{ s.course }} ({{ s.branch }})</td>
+                            <td>{{ s.cgpa }}</td>
+                            <td>
+                                {% if s.placement_status == 'active' %}
+                                    <span class="badge bg-success">Active</span>
+                                {% elif s.placement_status == 'blacklisted' %}
+                                    <span class="badge bg-danger">Blacklisted</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">{{ s.placement_status }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if s.placement_status != 'blacklisted' %}
+                                <a href="{{ url_for('blacklist_student', student_id=s.id) }}" class="btn btn-sm btn-outline-danger">Blacklist</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="7" class="text-center text-muted py-4">No students found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <h2>🏢 Welcome, {{ company.company_name }}!</h2>
+    <p class="text-muted">Company Dashboard</p>
+
+    <div class="row mt-4">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Company Profile</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>HR Person:</strong> {{ company.hr_name }}</p>
+                    <p><strong>HR Email:</strong> {{ company.hr_email }}</p>
+                    <p><strong>Contact:</strong> {{ company.hr_contact }}</p>
+                    <p><strong>Website:</strong> 
+                        {% if company.website %}
+                            <a href="{{ company.website }}" target="_blank">{{ company.website }}</a>
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </p>
+                    <hr>
+                    <p class="mb-0"><strong>Account Status:</strong> 
+                        {% if company.approval_status == 'approved' %}
+                            <span class="badge bg-success text-uppercase">{{ company.approval_status }}</span>
+                        {% elif company.approval_status == 'pending' %}
+                            <span class="badge bg-warning text-dark text-uppercase">{{ company.approval_status }}</span>
+                        {% else %}
+                            <span class="badge bg-danger text-uppercase">{{ company.approval_status }}</span>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8 mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">My Placement Drives</h4>
+                <a href="{{ url_for('create_drive') }}" class="btn btn-primary shadow-sm">+ Create New Drive</a>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Job Title</th>
+                                    <th>Deadline</th>
+                                    <th>Status</th>
+                                    <th>Applications</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for drive in company.drives %}
+                                <tr>
+                                    <td class="fw-bold">{{ drive.job_title }}</td>
+                                    <td>{{ drive.application_deadline }}</td>
+                                    <td>
+                                        {% if drive.status == 'approved' %}
+                                            <span class="badge bg-success">Approved</span>
+                                        {% elif drive.status == 'rejected' %}
+                                            <span class="badge bg-danger">Rejected</span>
+                                        {% else %}
+                                            <span class="badge bg-warning text-dark">Pending Admin Approval</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{{ url_for('company_applications', drive_id=drive.id) }}" class="btn btn-sm btn-info text-white w-100">View Applicants</a>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted py-4">
+                                        You haven't created any placement drives yet.<br>
+                                        Click "+ Create New Drive" to get started!
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

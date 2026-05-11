@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>📋 My Job Applications</h2>
+        <a href="{{ url_for('login') }}" class="btn btn-outline-secondary">Back to Dashboard</a>
+    </div>
+    
+    <div class="row mt-4">
+        {% for app in applications %}
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h5 class="fw-bold text-primary">{{ app.drive.company.company_name }}</h5>
+                    <h6 class="text-dark fw-bold">{{ app.drive.job_title }}</h6>
+                    <hr>
+                    <p class="mb-1"><strong>Applied On:</strong> {{ app.applied_at.strftime('%Y-%m-%d') if app.applied_at else 'N/A' }}</p>
+                    <p class="mb-0"><strong>Current Status:</strong> 
+                        {% if app.status == 'Selected' %}
+                            <span class="badge bg-success fs-6">Selected 🎉</span>
+                        {% elif app.status == 'Rejected' %}
+                            <span class="badge bg-danger">Rejected</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">{{ app.status }}</span>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12 text-center py-5">
+            <h5 class="text-muted">You haven't applied to any jobs yet.</h5>
+            <a href="{{ url_for('student_drives') }}" class="btn btn-primary mt-3">Find Jobs Now</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

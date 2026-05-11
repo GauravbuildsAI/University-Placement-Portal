@@ -1,0 +1,57 @@
+{% extends "base.html" %} {% block content %}
+<div class="container mt-4 mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>💼 Manage Placement Drives</h2>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Company</th>
+                            <th>Job Title</th>
+                            <th>Criteria & Deadline</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for d in drives %}
+                        <tr>
+                            <td>{{ d.id }}</td>
+                            <td class="fw-bold text-primary">{{ d.company.company_name }}</td>
+                            <td class="fw-bold">{{ d.job_title }}</td>
+                            <td>
+                                <small class="text-muted d-block">Req: {{ d.eligibility_criteria }}</small>
+                                <span class="badge bg-light text-dark border">By: {{ d.application_deadline }}</span>
+                            </td>
+                            <td>
+                                {% if d.status == 'approved' %}
+                                    <span class="badge bg-success">Approved</span>
+                                {% else %}
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if d.status != 'approved' %}
+                                <a href="{{ url_for('approve_drive', drive_id=d.id) }}" class="btn btn-sm btn-success">Approve</a>
+                                {% else %}
+                                <button class="btn btn-sm btn-outline-secondary" disabled>Approved</button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">No placement drives created yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

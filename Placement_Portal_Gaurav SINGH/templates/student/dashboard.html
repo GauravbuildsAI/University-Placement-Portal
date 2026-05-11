@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>🎓 Welcome, {{ student.full_name }}!</h2>
+        <span class="badge {% if student.placement_status == 'active' %}bg-success{% else %}bg-danger{% endif %} p-2">
+            Status: {{ student.placement_status|capitalize }}
+        </span>
+    </div>
+    <p class="text-muted">Student Dashboard</p>
+
+    <div class="row mt-4">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">My Profile</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Roll No:</strong> {{ student.roll_no }}</p>
+                    <p><strong>Course:</strong> {{ student.course }}</p>
+                    <p><strong>CGPA:</strong> <span class="badge bg-primary">{{ student.cgpa }}</span></p>
+                    <hr>
+                    <div class="d-grid gap-2">
+                        <a href="{{ url_for('edit_student_profile', student_email=student.user.email) }}" class="btn btn-outline-success btn-sm">Edit Profile / Resume</a>
+                        {% if student.resume_file %}
+                            <a href="{{ url_for('static', filename='resumes/' + student.resume_file) }}" target="_blank" class="btn btn-outline-secondary btn-sm">View My Resume</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">My Application History</h5>
+                    <a href="{{ url_for('student_drives') }}" class="btn btn-light btn-sm fw-bold">+ Apply More</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Company & Role</th>
+                                    <th>Applied On</th>
+                                    <th>Current Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if student.applications %}
+                                    {% for app in student.applications %}
+                                    <tr>
+                                        <td>
+                                            <div class="fw-bold">{{ app.drive.company.company_name }}</div>
+                                            <small class="text-muted">{{ app.drive.job_title }}</small>
+                                        </td>
+                                        <td>{{ app.applied_at.strftime('%d %b, %Y') }}</td>
+                                        <td>
+                                            {% if app.status == 'Selected' %}
+                                                <span class="badge bg-success fs-6">🎉 Selected</span>
+                                            {% elif app.status == 'Rejected' %}
+                                                <span class="badge bg-danger fs-6">Rejected</span>
+                                            {% elif app.status == 'Shortlisted' %}
+                                                <span class="badge bg-warning text-dark fs-6">⭐ Shortlisted</span>
+                                            {% else %}
+                                                <span class="badge bg-info text-dark fs-6">Applied</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="3" class="text-center py-4 text-muted">You haven't applied to any drives yet.</td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

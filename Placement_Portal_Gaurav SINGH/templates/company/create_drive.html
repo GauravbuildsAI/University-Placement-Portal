@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center mt-4 mb-5">
+    <div class="col-md-8">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-primary text-white text-center py-3">
+                <h4 class="mb-0">🚀 Create New Placement Drive</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" action="{{ url_for('create_drive') }}">
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Confirm Company Email</label>
+                        <input type="email" name="company_email" class="form-control" required placeholder="Enter your registered company email">
+                        <small class="text-muted">We need this to link the job to your account.</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Job Title</label>
+                        <input type="text" name="job_title" class="form-control" required placeholder="e.g. Software Developer / Data Analyst">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Job Description</label>
+                        <textarea name="job_description" class="form-control" rows="4" required placeholder="Describe the role and responsibilities..."></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Eligibility Criteria</label>
+                        <textarea name="eligibility_criteria" class="form-control" rows="2" required placeholder="e.g. B.Tech CS, Minimum 7.5 CGPA, No active backlogs"></textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Application Deadline</label>
+                        <input type="date" name="application_deadline" class="form-control" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 fw-bold">Post Job / Create Drive</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
